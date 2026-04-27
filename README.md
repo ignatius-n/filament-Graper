@@ -1,13 +1,11 @@
 # GrapeJS Page Builder for Filament
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/cybertroniankelvin/graper.svg?style=flat-square)](https://packagist.org/packages/cybertroniankelvin/graper)
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/cybertroniankelvin/graper/run-tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/CybertronianKelvin/graper/actions?query=workflow%3Arun-tests+branch%3Amain)
-[![GitHub Code Style Action Status](https://img.shields.io/github/actions/workflow/status/cybertroniankelvin/graper/fix-php-code-style-issues.yml?branch=main&label=code%20style&style=flat-square)](https://github.com/CybertronianKelvin/graper/actions?query=workflow%3A%22Fix+PHP+code+style+issues%22+branch%3Amain)
 [![Total Downloads](https://img.shields.io/packagist/dt/cybertroniankelvin/graper.svg?style=flat-square)](https://packagist.org/packages/cybertroniankelvin/graper)
 
 A visual page builder plugin for Filament that uses GrapeJS v3 to let admins create and edit pages with a drag-and-drop interface.
 
-![Filamanetphp + grapejs](assets/banner.png)
+<img src="assets/banner.png" alt="FilamentPHP + GrapesJS" class="filament-hidden" />
 
 ## How to Use This Plugin
 
