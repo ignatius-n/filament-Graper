@@ -21,8 +21,7 @@ class GraperServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('graper')
-            ->hasConfigFile('graper')
-            ->hasConfigFile('grapesjs')
+            ->hasConfigFile(['graper', 'grapesjs'])
             ->hasViews()
             ->hasMigration('create_graper_pages_table')
             ->hasCommand(GraperCommand::class)
@@ -31,6 +30,8 @@ class GraperServiceProvider extends PackageServiceProvider
 
     public function boot(): void
     {
+        parent::boot();
+
         view()->addNamespace('graper', base_path('packages/graper/resources/views'));
 
         $this->loadRoutes();
