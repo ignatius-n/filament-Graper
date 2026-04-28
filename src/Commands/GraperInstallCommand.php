@@ -17,13 +17,13 @@ class GraperInstallCommand extends Command
         $this->info('Installing Graper...');
 
         $this->call('vendor:publish', [
-            '--package' => 'graper/graper',
-            '--tag' => 'grapesjs-config',
+            '--provider' => 'CybertronianKelvin\Graper\GraperServiceProvider',
+            '--tag' => 'graper-config',
         ]);
 
         $this->call('vendor:publish', [
-            '--package' => 'graper/graper',
-            '--tag' => 'grapesjs-migrations',
+            '--provider' => 'CybertronianKelvin\Graper\GraperServiceProvider',
+            '--tag' => 'graper-migrations',
         ]);
 
         $this->info('Graper installed successfully.');
