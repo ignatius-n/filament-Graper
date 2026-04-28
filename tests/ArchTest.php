@@ -1,6 +1,11 @@
 <?php
 
 declare(strict_types=1);
+use CybertronianKelvin\Graper\Storage\StorageDriver;
+use Filament\Contracts\Plugin;
+use Illuminate\Console\Command;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Routing\Controller;
 
 arch('no debugging functions in source')
     ->expect(['dd', 'dump', 'ray', 'var_dump'])
@@ -8,23 +13,23 @@ arch('no debugging functions in source')
 
 arch('models extend Eloquent Model')
     ->expect('CybertronianKelvin\Graper\Models')
-    ->toExtend(\Illuminate\Database\Eloquent\Model::class);
+    ->toExtend(Model::class);
 
 arch('controllers extend Laravel Controller')
     ->expect('CybertronianKelvin\Graper\Http\Controllers')
-    ->toExtend(\Illuminate\Routing\Controller::class);
+    ->toExtend(Controller::class);
 
 arch('storage driver implements StorageDriver interface')
     ->expect('CybertronianKelvin\Graper\Storage\EloquentDriver')
-    ->toImplement(\CybertronianKelvin\Graper\Storage\StorageDriver::class);
+    ->toImplement(StorageDriver::class);
 
 arch('plugin implements Filament Plugin contract')
     ->expect('CybertronianKelvin\Graper\GraperPlugin')
-    ->toImplement(\Filament\Contracts\Plugin::class);
+    ->toImplement(Plugin::class);
 
 arch('commands extend Illuminate Command')
     ->expect('CybertronianKelvin\Graper\Commands')
-    ->toExtend(\Illuminate\Console\Command::class);
+    ->toExtend(Command::class);
 
 arch('all source files use strict types')
     ->expect('CybertronianKelvin\Graper')

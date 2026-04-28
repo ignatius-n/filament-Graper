@@ -6,32 +6,85 @@ use CybertronianKelvin\Graper\ComponentTraits\ComponentTrait;
 
 class TestComponentTraitStub extends ComponentTrait
 {
-    public static function getId(): string { return 'test-trait'; }
-    public static function getName(): string { return 'Test Trait'; }
-    public static function getLabel(): string { return 'Test Label'; }
-    public static function getType(): string { return 'select'; }
+    public static function getId(): string
+    {
+        return 'test-trait';
+    }
+
+    public static function getName(): string
+    {
+        return 'Test Trait';
+    }
+
+    public static function getLabel(): string
+    {
+        return 'Test Label';
+    }
+
+    public static function getType(): string
+    {
+        return 'select';
+    }
 }
 
 class OrderedTraitStub extends ComponentTrait
 {
-    public static function getId(): string { return 'ordered-trait'; }
-    public static function getName(): string { return 'Ordered'; }
-    public static function getLabel(): string { return 'Ordered Trait'; }
-    public static function getType(): string { return 'text'; }
-    public static function getOrder(): int { return 50; }
+    public static function getId(): string
+    {
+        return 'ordered-trait';
+    }
+
+    public static function getName(): string
+    {
+        return 'Ordered';
+    }
+
+    public static function getLabel(): string
+    {
+        return 'Ordered Trait';
+    }
+
+    public static function getType(): string
+    {
+        return 'text';
+    }
+
+    public static function getOrder(): int
+    {
+        return 50;
+    }
 }
 
 class OptionsTraitStub extends ComponentTrait
 {
-    public static function getId(): string { return 'options-trait'; }
-    public static function getName(): string { return 'Options'; }
-    public static function getLabel(): string { return 'Options Trait'; }
-    public static function getType(): string { return 'select'; }
-    public static function getOptions(): array { return ['a' => 'A', 'b' => 'B']; }
+    public static function getId(): string
+    {
+        return 'options-trait';
+    }
+
+    public static function getName(): string
+    {
+        return 'Options';
+    }
+
+    public static function getLabel(): string
+    {
+        return 'Options Trait';
+    }
+
+    public static function getType(): string
+    {
+        return 'select';
+    }
+
+    public static function getOptions(): array
+    {
+        return ['a' => 'A', 'b' => 'B'];
+    }
 }
 
 test('component trait has required methods', function () {
-    $trait = new TestComponentTraitStub();
+    $trait = new TestComponentTraitStub;
 
     expect($trait::getId())->toBe('test-trait');
     expect($trait::getName())->toBe('Test Trait');
@@ -43,11 +96,11 @@ test('component trait has required methods', function () {
 });
 
 test('component trait can override order', function () {
-    $trait = new OrderedTraitStub();
+    $trait = new OrderedTraitStub;
     expect($trait::getOrder())->toBe(50);
 });
 
 test('component trait can have options', function () {
-    $trait = new OptionsTraitStub();
+    $trait = new OptionsTraitStub;
     expect($trait::getOptions())->toBe(['a' => 'A', 'b' => 'B']);
 });
