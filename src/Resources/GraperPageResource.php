@@ -24,7 +24,7 @@ class GraperPageResource extends Resource
 {
     protected static ?string $model = GraperPage::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationLabel = 'Pages';
 
