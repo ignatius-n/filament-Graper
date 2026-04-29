@@ -21,6 +21,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class GraperPageResource extends Resource
 {
@@ -36,7 +37,14 @@ class GraperPageResource extends Resource
     {
         return $schema->components([
             TextInput::make('title')
-                ->required(),
+                ->required()
+                ->live(onBlur: true)
+                ->afterStateUpdated(function (string $operation, $state, callable $set) {
+                    if ($operation === 'edit') {
+                        return;
+                    }
+                    $set('slug', Str::slug($state));
+                }),
             TextInput::make('slug')
                 ->unique(ignoreRecord: true)
                 ->required(),
