@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 use CybertronianKelvin\Graper\Graper;
 use CybertronianKelvin\Graper\Models\GraperPage;
+use Illuminate\Database\Eloquent\Builder;
 
 it('returns a query builder from pages()', function () {
     expect((new Graper)->pages())
-        ->toBeInstanceOf(\Illuminate\Database\Eloquent\Builder::class);
+        ->toBeInstanceOf(Builder::class);
 });
 
 it('finds a page by id', function () {

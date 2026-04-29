@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use CybertronianKelvin\Graper\Models\GraperPage;
+use Illuminate\Database\QueryException;
 
 it('can create a graper page', function () {
     $page = GraperPage::factory()->create(['title' => 'My Page', 'slug' => 'my-page']);
@@ -32,7 +33,7 @@ it('enforces unique slugs', function () {
     GraperPage::factory()->create(['slug' => 'duplicate-slug']);
 
     expect(fn () => GraperPage::factory()->create(['slug' => 'duplicate-slug']))
-        ->toThrow(\Illuminate\Database\QueryException::class);
+        ->toThrow(QueryException::class);
 });
 
 it('has the correct fillable fields', function () {

@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace CybertronianKelvin\Graper;
 
-use CybertronianKelvin\Graper\Blocks\BlockRegistry;
 use CybertronianKelvin\Graper\Commands\GraperCommand;
 use CybertronianKelvin\Graper\Commands\GraperInstallCommand;
 use CybertronianKelvin\Graper\Http\Controllers\GraperPageController;
@@ -21,8 +20,7 @@ class GraperServiceProvider extends PackageServiceProvider
     {
         $package
             ->name('graper')
-            ->hasConfigFile('graper')
-            ->hasConfigFile('grapesjs')
+            ->hasConfigFile(['graper', 'grapesjs'])
             ->hasViews()
             ->hasMigration('create_graper_pages_table')
             ->hasCommand(GraperCommand::class)
@@ -31,25 +29,29 @@ class GraperServiceProvider extends PackageServiceProvider
 
     public function boot(): void
     {
-        view()->addNamespace('graper', base_path('packages/graper/resources/views'));
+        parent::boot();
 
         $this->loadRoutes();
         $this->registerDisplayRoute();
 
         FilamentAsset::register([
-            Css::make('graper-editor', 'https://unpkg.com/grapesjs/dist/css/grapes.min.css'),
-            Js::make('graper-editor', asset('build/grapesjs/index.js')),
+            Css::make('graper-editor-css', 'https://unpkg.com/grapesjs/dist/css/grapes.min.css'),
+            Js::make('graper-editor', __DIR__.'/../dist/grapesjs/index.js'),
         ], 'graper');
     }
 
     protected function registerDisplayRoute(): void
     {
-        $prefix = trim(config('graper.page_route_prefix', '/'), '/');
-        $path = $prefix === '' ? '/{slug}' : '/'.$prefix.'/{slug}';
+        $prefix = trim(config('graper.page_route_prefix', 'pages') ?? 'pages', '/');
 
-        Route::get($path, [GraperPageController::class, 'display'])
+        if (empty($prefix)) {
+            $prefix = 'pages';
+        }
+
+        Route::get('/'.$prefix.'/{slug}', [GraperPageController::class, 'display'])
             ->middleware('web')
-            ->name('graper.page.display');
+            ->name('graper.page.display')
+            ->where('slug', '[a-z0-9-]+');
     }
 
     protected function loadRoutes(): void

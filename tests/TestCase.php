@@ -8,7 +8,6 @@ use CybertronianKelvin\Graper\GraperServiceProvider;
 use CybertronianKelvin\Graper\Http\Controllers\GraperPageController;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\File;
-use Illuminate\Routing\Router;
 use Orchestra\Testbench\TestCase as Orchestra;
 
 class TestCase extends Orchestra

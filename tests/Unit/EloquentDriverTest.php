@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use CybertronianKelvin\Graper\Models\GraperPage;
 use CybertronianKelvin\Graper\Storage\EloquentDriver;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 it('loads a page by id', function () {
     $page = GraperPage::factory()->withContent()->create();
@@ -59,5 +60,5 @@ it('throws an exception for a non-existent page', function () {
     $driver = new EloquentDriver;
 
     expect(fn () => $driver->load(99999))
-        ->toThrow(\Illuminate\Database\Eloquent\ModelNotFoundException::class);
+        ->toThrow(ModelNotFoundException::class);
 });

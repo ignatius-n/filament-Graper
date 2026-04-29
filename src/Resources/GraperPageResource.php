@@ -9,22 +9,25 @@ use CybertronianKelvin\Graper\Models\GraperPage;
 use CybertronianKelvin\Graper\Resources\GraperPageResource\Pages\CreateGraperPage;
 use CybertronianKelvin\Graper\Resources\GraperPageResource\Pages\EditGraperPage;
 use CybertronianKelvin\Graper\Resources\GraperPageResource\Pages\ListGraperPages;
+use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
-use Filament\Forms\Components\DateTimePicker;
-use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\TernaryFilter;
 use Filament\Tables\Table;
+use Illuminate\Support\Str;
 
 class GraperPageResource extends Resource
 {
     protected static ?string $model = GraperPage::class;
 
-    protected static string|\BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|null|\BackedEnum $navigationIcon = 'heroicon-o-document-text';
 
     protected static ?string $navigationLabel = 'Pages';
 
@@ -35,38 +38,58 @@ class GraperPageResource extends Resource
         return $schema->components([
             TextInput::make('title')
                 ->required()
-                ->columnSpan(2),
+                ->live(onBlur: true)
+                ->afterStateUpdated(function (string $operation, $state, callable $set) {
+                    if ($operation === 'edit') {
+                        return;
+                    }
+                    $set('slug', Str::slug($state));
+                }),
             TextInput::make('slug')
                 ->unique(ignoreRecord: true)
                 ->required(),
-            Select::make('is_published')
+            Toggle::make('is_published')
                 ->label('Published')
-                ->options([true => 'Yes', false => 'No'])
-                ->default(false)
-                ->required(),
-            DateTimePicker::make('published_at')
-                ->columnSpan(2),
+                ->default(false),
             GrapesJsField::make('content')
                 ->loadDefaultBlocks()
                 ->minHeight('70vh')
                 ->columnSpanFull(),
-        ])->columns(3);
+        ])->columns(2);
     }
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
-                TextColumn::make('id'),
-                TextColumn::make('title'),
-                TextColumn::make('slug'),
-                IconColumn::make('is_published'),
-                TextColumn::make('created_at')->dateTime(),
+                TextColumn::make('id')
+                    ->sortable(),
+                TextColumn::make('title')
+                    ->searchable()
+                    ->sortable(),
+                TextColumn::make('slug')
+                    ->searchable(),
+                IconColumn::make('is_published')
+                    ->boolean()
+                    ->sortable(),
+                TextColumn::make('created_at')
+                    ->dateTime()
+                    ->sortable(),
+            ])
+            ->filters([
+                TernaryFilter::make('is_published')
+                    ->label('Published'),
             ])
             ->actions([
                 EditAction::make(),
                 DeleteAction::make(),
-            ]);
+            ])
+            ->bulkActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ])
+            ->defaultSort('created_at', 'desc');
     }
 
     public static function getPages(): array

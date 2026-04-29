@@ -17,11 +17,12 @@ In a Laravel/Filament app:
 # Install the package
 composer require cybertroniankelvin/graper
 
-# Run migrations
-php artisan migrate
+# Option A: one-step install (recommended) — publishes config, runs migrations
+php artisan graper:install
 
-# Publish config/views if needed
-php artisan vendor:publish --provider="CybertronianKelvin\Graper\GraperServiceProvider"
+# Option B: manual
+php artisan migrate
+php artisan vendor:publish --tag=graper-config   # optional — to customise config
 ```
 
 Register the plugin (in `app/Providers/Filament/AdminPanelProvider.php`):
