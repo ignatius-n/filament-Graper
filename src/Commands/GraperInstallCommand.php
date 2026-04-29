@@ -26,6 +26,8 @@ class GraperInstallCommand extends Command
             '--tag' => 'graper-migrations',
         ]);
 
+        $this->call('migrate');
+
         $this->info('Graper installed successfully.');
 
         return self::SUCCESS;
